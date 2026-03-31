@@ -1,6 +1,6 @@
 # VOXA — Voice AI App
 
-A real-time voice assistant powered by **Gemini 1.5 Flash**, built with **React (Vite)** and **FastAPI**.
+A real-time voice assistant powered by **GPT-4o Mini**, built with **React (Vite)** and **FastAPI**.
 
 ```
 voice-ai-app/
@@ -21,11 +21,14 @@ voice-ai-app/
 
 ---
 
-## 1. Get a Gemini API Key
+## 1. Get an OpenAI API Key
 
-1. Go to [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
-2. Click **"Create API key"**
-3. Copy the key
+1. Go to [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Click **"Create new secret key"**
+3. Copy the full key — it looks like `sk-proj-AbCdEf123...`
+
+> ⚠️ You need a paid OpenAI account with billing enabled to use the API.
+> Add a payment method at [https://platform.openai.com/settings/billing](https://platform.openai.com/settings/billing)
 
 ---
 
@@ -44,8 +47,8 @@ pip install -r requirements.txt
 # Create .env file
 cp .env.example .env
 # Open .env and paste your key:
-#   GEMINI_API_KEY=AIza...your_key_here
-# AIzaSyAPb1-HFdXWsIPSyaqJ4LIb8QGXMIZRBS0
+#   OPENAI_API_KEY=sk-proj-...your_real_key_here
+
 # Start the server
 uvicorn main:app --reload --port 8000
 ```
@@ -97,9 +100,9 @@ React App (App.jsx)
     │  POST /chat  { text: "..." }
     ▼
 FastAPI (main.py)
-    │  calls Gemini 1.5 Flash
+    │  calls GPT-4o Mini
     ▼
-Gemini API
+OpenAI API
     │  returns AI response text
     ▼
 FastAPI  →  React App
@@ -115,7 +118,8 @@ User hears the response 🎉
 | Issue | Fix |
 |-------|-----|
 | Microphone not working | Allow mic permission in browser; use HTTPS or localhost |
-| `GEMINI_API_KEY not found` | Check your `backend/.env` file exists with the key |
+| `401 Incorrect API key` | Open `backend/.env` and paste the real key from platform.openai.com |
+| `OPENAI_API_KEY not found` | Check that `backend/.env` file exists and has the key |
 | CORS error | Make sure backend is running on port 8000 |
 | Speech not recognized | Speak clearly; Chrome works best |
 | No voice output | Check system volume; browser may need a user gesture first |
